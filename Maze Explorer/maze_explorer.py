@@ -50,7 +50,6 @@ rooms = {
 
          }
 
-
 #Methods
 
 def game_instructions():

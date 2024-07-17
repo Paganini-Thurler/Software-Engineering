@@ -29,17 +29,28 @@ inventory = []
 
 #The map modeled as a dictionary linking a room to other rooms, a good exercise would be to draw the map to teach 
 rooms = {
-
+            'Dining room':{
+                  'west' : 'Hall',
+                  'south': 'Garden'
+              },
             'Hall' : { 
-                  'south' : 'Kitchen'
+                  'east' : 'Dining room',
+                  'south' : 'Kitchen',
+                  'item' : 'key'
+                  
                 },
-
+            'Garden':{
+                'north': 'Dining room',
+                'item':'potion'
+            },
             'Kitchen' : {
-                  'north' : 'Hall'
+                  'north' : 'Hall',
+                  'item' : 'monster'
                 }
 
          }
 
+move = ''
 
 #Methods
 
@@ -76,37 +87,23 @@ def display_items():
   #print an item if there is one
   if "item" in rooms[current_location]:
     print('You see a ' + rooms[current_location]['item'])
-    
-#Game loop    
-  
-game_instructions()
 
-# In the original, it used a while True: which is not a recommended pratice while building software, infinite loops can create problems
-#as the software complexity grows.
-while is_running:
-
-  display_status()
-
-  #get the player's next 'move'
-  #.split() breaks it up into an list array
-  #eg typing 'go east' would give the list:
-  #['go','east']
-  move = ''
-  while move == '':  
-    move = input('>')
-    
-  move = move.lower().split()
-
-  #if they type 'go' first
+def go():
+  global current_location
+   #if they type 'go' first
   if move[0] == 'go':
     #check that they are allowed wherever they want to go
     if move[1] in rooms[current_location]:
       #set the current room to the new room
       current_location = rooms[current_location][move[1]]
+    
     #there is no door (link) to the new room
     else:
         print('You can\'t go that way!')
 
+def get():
+  #Using a global variable in a method
+  global inventory
   #if they type 'get' first
   if move[0] == 'get' :
     #if the room contains an item, and the item is the one they want to get
@@ -122,3 +119,51 @@ while is_running:
       #tell them they can't get it
       print('Can\'t get ' + move[1] + '!')
 
+def get_input():
+  #get the player's next 'move'.split() breaks it up into an list array #eg typing 'go east' would give the list:['go','east']
+  global move
+  move = ''
+  while move == '':  
+    move = input('>')
+  move = move.lower().split()
+
+
+def game_over():
+  global is_running
+  if 'item' in rooms[current_location] and 'monster' in rooms[current_location]['item']:
+      print("Game over")
+      is_running = False
+
+def win():
+  global is_running
+  if current_location == 'Garden' and 'key' in inventory and 'potion' in inventory:
+    print("You scaped the house")
+    is_running = False
+     
+#Game loop    
+  
+# In the original, it used a while True: which is not a recommended pratice while building software, infinite loops can create problems
+#as the software complexity grows.
+game_instructions()
+
+while is_running:
+
+  display_status()
+
+  get_input()
+
+  go()
+
+  get()
+
+  win()
+
+  game_over()
+  
+
+  
+ 
+
+
+
+  
