@@ -30,17 +30,22 @@ inventory = []
 #The map modeled as a dictionary linking a room to other rooms, a good exercise would be to draw the map to teach 
 rooms = {
             'Dining room':{
-                  'west' : 'Hall'
+                  'west' : 'Hall',
+                  'south': 'Garden'
               },
             'Hall' : { 
-                  "east" : 'Dining room',
+                  'east' : 'Dining room',
                   'south' : 'Kitchen',
-                  "item" : 'key'
+                  'item' : 'key'
                   
                 },
-
+            'Garden':{
+                'north': 'Dining room',
+                'item':'potion'
+            },
             'Kitchen' : {
-                  'north' : 'Hall'
+                  'north' : 'Hall',
+                  'item' : 'monster'
                 }
 
          }
@@ -116,5 +121,16 @@ while is_running:
     #otherwise, if the item isn't there to get
     else:
       #tell them they can't get it
-      print('Can\'t get ' + move[1] + '!')
+      print('Can\'t get ' + move[1] + '!') 
+      
+  # Player loses if he/she enters in a room with a monster
+  if 'item' in rooms[current_location] and 'monster' in rooms[current_location]['item']:
+      print("Game over")
+      break
+  
+  # Wining condition
+  if current_location == 'Garden' and 'key' in inventory and 'potion' in inventory:
+    print("You scaped the house")
+    break
+
 
