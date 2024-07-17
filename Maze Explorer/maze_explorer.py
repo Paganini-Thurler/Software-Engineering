@@ -29,9 +29,14 @@ inventory = []
 
 #The map modeled as a dictionary linking a room to other rooms, a good exercise would be to draw the map to teach 
 rooms = {
-
+            'Dining room':{
+                  'west' : 'Hall'
+              },
             'Hall' : { 
-                  'south' : 'Kitchen'
+                  "east" : 'Dining room',
+                  'south' : 'Kitchen',
+                  "item" : 'key'
+                  
                 },
 
             'Kitchen' : {
