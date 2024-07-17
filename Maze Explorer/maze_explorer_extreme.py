@@ -14,6 +14,17 @@ structural pattern: "A game uses methods, methods can use data"
   
 '''
 
+'''
+Challenge for students: 
+  Add more rooms;
+  Add an item to protect from the monster;
+  Add an weapon;
+  Add rooms above and bellow connected by stairs;
+  Add a combat system.
+
+'''
+
+
 #Data
 
 #It came to my mind that this is an excellent section to ponder about how data are used in an information system.
@@ -50,6 +61,7 @@ rooms = {
 
          }
 
+#Global variable that is responsible for player inputs
 move = ''
 
 #Methods
